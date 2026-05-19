@@ -1,0 +1,49 @@
+{
+  "productExtras": [
+    {
+      "id": "pikachu",
+      "description": "Producto destacado para fans que buscan energia, velocidad y un articulo iconico del catalogo.",
+      "brand": "Liverpool Collectors",
+      "category": "Electronica y coleccionables",
+      "rating": 4.9,
+      "stock": 18,
+      "tags": ["favorito", "edicion especial", "envio rapido"]
+    },
+    {
+      "id": "charizard",
+      "description": "Articulo premium con presencia fuerte, ideal para coleccionistas que prefieren piezas de alto impacto.",
+      "brand": "Liverpool Premium",
+      "category": "Coleccionables premium",
+      "rating": 4.8,
+      "stock": 7,
+      "tags": ["premium", "mas vendido", "alto valor"]
+    },
+    {
+      "id": "bulbasaur",
+      "description": "Opcion balanceada para iniciar una coleccion con un producto versatil y de excelente relacion valor-precio.",
+      "brand": "Liverpool Basics",
+      "category": "Juguetes y figuras",
+      "rating": 4.6,
+      "stock": 24,
+      "tags": ["recomendado", "nuevo ingreso", "familiar"]
+    },
+    {
+      "id": "squirtle",
+      "description": "Producto compacto y resistente pensado para compradores que buscan una pieza practica y reconocible.",
+      "brand": "Liverpool Basics",
+      "category": "Juguetes y figuras",
+      "rating": 4.7,
+      "stock": 16,
+      "tags": ["clasico", "envio rapido", "coleccion"]
+    },
+    {
+      "id": "mew",
+      "description": "Producto de coleccion especial con disponibilidad limitada y una propuesta ideal para fans avanzados.",
+      "brand": "Liverpool Collectors",
+      "category": "Edicion limitada",
+      "rating": 5,
+      "stock": 3,
+      "tags": ["limitado", "exclusivo", "coleccionista"]
+    }
+  ]
+}
