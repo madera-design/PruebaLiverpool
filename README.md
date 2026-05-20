@@ -52,7 +52,7 @@ Usar estas credenciales para iniciar sesion en `/login`:
 
 ```bash
 Correo: usuario@liverpool.com
-Contrasena: liverpool123
+Contraseña: liverpool123
 ```
 
 ## Scripts
