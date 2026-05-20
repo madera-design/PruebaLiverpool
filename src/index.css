@@ -231,14 +231,36 @@ button:active {
 }
 
 .brand-mark {
+  position: relative;
   display: inline-grid;
   width: 34px;
   height: 34px;
   place-items: center;
-  border-radius: 8px;
-  color: #ffffff;
-  background: linear-gradient(135deg, var(--color-brand), var(--color-brand-dark));
+  overflow: hidden;
+  border: 2px solid var(--color-text);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, var(--color-brand) 0 46%, var(--color-text) 46% 54%, #ffffff 54% 100%);
   box-shadow: 0 8px 18px rgba(198, 0, 126, 0.22);
+}
+
+.brand-mark::before {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-text);
+  border-radius: 999px;
+  background: #ffffff;
+  content: "";
+}
+
+.brand-mark::after {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-text);
+  content: "";
 }
 
 .app-main {
@@ -851,10 +873,10 @@ p {
   max-width: calc(100% - 24px);
   padding: 3px 8px;
   border: 1px solid rgba(198, 0, 126, 0.22);
-  border-radius: 999px;
+  border-radius: 8px;
   color: var(--color-brand-dark);
   background: rgba(255, 255, 255, 0.86);
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -891,9 +913,14 @@ p {
 }
 
 .product-card__types .pokemon-type {
-  min-height: 26px;
-  padding: 3px 8px;
-  font-size: 0.76rem;
+  min-height: 34px;
+  padding: 5px 10px 5px 7px;
+  font-size: 0.82rem;
+}
+
+.product-card__types .pokemon-type img {
+  width: 20px;
+  height: 20px;
 }
 
 .product-card p,
@@ -988,6 +1015,7 @@ p {
 .carousel-button {
   position: absolute;
   top: 50%;
+  z-index: 2;
   display: inline-grid;
   width: 38px;
   height: 38px;
@@ -999,10 +1027,28 @@ p {
   color: var(--color-brand-dark);
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 22px rgba(36, 33, 42, 0.12);
-  font-size: 1.8rem;
+  color: transparent;
+  font-size: 0;
   font-weight: 700;
   line-height: 1;
   transform: translateY(-50%);
+}
+
+.carousel-button:active {
+  transform: translateY(-50%);
+}
+
+.carousel-button::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-top: 4px solid var(--color-brand-dark);
+  border-right: 4px solid var(--color-brand-dark);
+  content: "";
+  pointer-events: none;
+  transform-origin: center;
 }
 
 .carousel-button:hover {
@@ -1010,12 +1056,24 @@ p {
   background: var(--color-brand);
 }
 
+.carousel-button:hover::before {
+  border-color: #ffffff;
+}
+
 .carousel-button--previous {
   left: 28px;
 }
 
+.carousel-button--previous::before {
+  transform: translate(-36%, -50%) rotate(-135deg);
+}
+
 .carousel-button--next {
   right: 28px;
+}
+
+.carousel-button--next::before {
+  transform: translate(-64%, -50%) rotate(45deg);
 }
 
 .carousel-thumbnails {
@@ -1120,19 +1178,55 @@ p {
   font-weight: 850;
 }
 
+.pokemon-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.pokemon-generation {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 10px;
+  border: 1px solid rgba(198, 0, 126, 0.2);
+  border-radius: 8px;
+  color: var(--color-brand-dark);
+  background: #fff8fc;
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
 .pokemon-description {
   max-width: 68ch;
   color: var(--color-muted);
 }
 
 .pokemon-type {
-  min-height: 36px;
-  padding: 6px 13px;
-  border-color: var(--type-border);
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  gap: 7px;
+  min-height: 38px;
+  padding: 6px 12px 6px 8px;
+  border: 1px solid var(--type-border);
+  border-radius: 8px;
   color: var(--type-text);
   background: var(--type-bg);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.42),
+    0 6px 14px rgba(36, 33, 42, 0.06);
+  font-weight: 850;
   text-transform: capitalize;
+}
+
+.pokemon-type img {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  border-radius: 6px;
+  object-fit: contain;
 }
 
 .pokemon-type--normal {
@@ -1379,7 +1473,7 @@ p {
   gap: 8px;
 }
 
-.tag-list span {
+.tag-list span:not(.pokemon-type) {
   display: inline-flex;
   align-items: center;
   min-height: 32px;
@@ -1516,14 +1610,28 @@ p {
 
 @media (max-width: 640px) {
   .brand {
+    grid-column: 1;
+    grid-row: 1;
+    flex: 0 0 auto;
     min-height: 38px;
   }
 
+  .brand > span:not(.brand-mark) {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
   .app-header {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
     align-items: start;
-    gap: 8px;
+    gap: 12px;
     min-height: 0;
-    padding: 10px 16px;
+    padding: 10px 14px;
   }
 
   .session-actions {
@@ -1533,15 +1641,20 @@ p {
   .session-menu {
     position: relative;
     display: block;
-    width: 100%;
+    grid-column: 2;
+    grid-row: 1;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .session-menu summary {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 10px;
     min-height: 34px;
+    padding-right: 34px;
     color: var(--color-muted);
     font-size: 0.9rem;
     font-weight: 750;
@@ -1554,15 +1667,49 @@ p {
   }
 
   .session-menu summary::after {
-    color: var(--color-brand-dark);
-    content: "v";
-    font-size: 1.1rem;
-    line-height: 1;
-    transition: transform 160ms ease;
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    width: 22px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-brand-dark);
+    box-shadow:
+      0 -7px 0 var(--color-brand-dark),
+      0 7px 0 var(--color-brand-dark);
+    content: "";
+    transform: translateY(-50%);
+    transition:
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .session-menu summary::before {
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    width: 22px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-brand-dark);
+    content: "";
+    opacity: 0;
+    transform: translateY(-50%) rotate(-45deg);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
   }
 
   .session-menu[open] summary::after {
-    transform: rotate(180deg);
+    box-shadow:
+      0 0 0 var(--color-brand-dark),
+      0 0 0 var(--color-brand-dark);
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .session-menu[open] summary::before {
+    opacity: 1;
+    transform: translateY(-50%) rotate(-45deg);
   }
 
   .session-menu summary span {
@@ -1713,4 +1860,3 @@ p {
     padding: 16px;
   }
 }
-

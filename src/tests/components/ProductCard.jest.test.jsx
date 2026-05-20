@@ -8,7 +8,12 @@ const product = {
   title: 'Mewtwo',
   image: 'https://example.com/mewtwo.png',
   formattedPrice: '$2,490',
-  types: ['psychic'],
+  types: [
+    {
+      icon: 'https://example.com/psychic.png',
+      name: 'psychic',
+    },
+  ],
 }
 
 describe('ProductCard with Jest', () => {
@@ -17,7 +22,7 @@ describe('ProductCard with Jest', () => {
 
     expect(screen.getByRole('heading', { name: 'Mewtwo' })).toBeInTheDocument()
     expect(screen.getByText('#150')).toBeInTheDocument()
-    expect(screen.getByText('Liverpool Collection')).toBeInTheDocument()
+    expect(screen.getByText('Generacion 1')).toBeInTheDocument()
     expect(screen.getByText('psychic')).toBeInTheDocument()
     expect(screen.getByText('$2,490')).toBeInTheDocument()
     expect(screen.getByText('Ver detalle')).toBeInTheDocument()

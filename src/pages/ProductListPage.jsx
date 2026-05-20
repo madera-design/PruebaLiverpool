@@ -34,7 +34,7 @@ function ProductListPage() {
   const isLoading = status === 'loading'
   const isPagingLoading = pagingStatus === 'loading'
   const canLoadMore = !query && !isLoading && !error && hasMore
-  const availableProductsLabel = `${products.length} productos disponibles`
+  const availableProductsLabel = `${products.length} pokemones disponibles`
   const lastUpdatedLabel = lastUpdated
     ? `Actualizado hace ${Math.max(
         1,
@@ -154,9 +154,9 @@ function ProductListPage() {
           {canLoadMore || isPagingLoading ? (
             <div className="load-more-sentinel" ref={loadMoreRef}>
               {isPagingLoading ? (
-                <Loader label="Cargando mas productos" />
+                <Loader label="Cargando mas pokemones" />
               ) : (
-                <span>Desplazate para cargar mas productos</span>
+                <span>Desplazate para cargar mas pokemones</span>
               )}
             </div>
           ) : null}

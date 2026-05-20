@@ -39,7 +39,7 @@ function App() {
     <div className="app-shell">
       <header className="app-header">
         <NavLink className="brand" to="/products" aria-label="Ir al catalogo">
-          <span className="brand-mark">L</span>
+          <span className="brand-mark" aria-hidden="true" />
           <span>Lista de Pokemones</span>
         </NavLink>
 
@@ -47,9 +47,6 @@ function App() {
           <>
             <nav className="session-actions" aria-label="Navegacion de usuario">
               <span className="session-email">{user?.email}</span>
-              <NavLink className="session-link" to="/products">
-                Catalogo
-              </NavLink>
               <button
                 type="button"
                 className="session-button"
@@ -71,7 +68,6 @@ function App() {
                 <span>{user?.email}</span>
               </summary>
               <div className="session-menu__panel">
-                <NavLink to="/products">Catalogo</NavLink>
                 <button type="button" onClick={() => setIsFormModalOpen(true)}>
                   Formulario
                 </button>

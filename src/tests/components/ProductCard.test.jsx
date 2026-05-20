@@ -8,7 +8,12 @@ const product = {
   title: 'Pikachu',
   image: 'https://example.com/pikachu.png',
   formattedPrice: '$1,234',
-  types: ['electric'],
+  types: [
+    {
+      icon: 'https://example.com/electric.png',
+      name: 'electric',
+    },
+  ],
 }
 
 describe('ProductCard', () => {
@@ -17,8 +22,12 @@ describe('ProductCard', () => {
 
     expect(screen.getByRole('heading', { name: 'Pikachu' })).toBeInTheDocument()
     expect(screen.getByText('#025')).toBeInTheDocument()
-    expect(screen.getByText('Liverpool Collection')).toBeInTheDocument()
+    expect(screen.getByText('Generacion 1')).toBeInTheDocument()
     expect(screen.getByText('electric')).toBeInTheDocument()
+    expect(document.querySelector('.pokemon-type img')).toHaveAttribute(
+      'src',
+      'https://example.com/electric.png',
+    )
     expect(screen.getByText('$1,234')).toBeInTheDocument()
     expect(screen.getByText('Ver detalle')).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Pikachu' })).toHaveAttribute(

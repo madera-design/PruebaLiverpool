@@ -75,6 +75,21 @@ function formatApiName(name) {
   return name.replaceAll('-', ' ')
 }
 
+function getPokemonTypeIcon(typeUrl) {
+  const typeId = typeUrl.match(/\/type\/(\d+)\//)?.[1]
+
+  return typeId
+    ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-ix/scarlet-violet/small/${typeId}.png`
+    : null
+}
+
+function mapPokemonType({ type }) {
+  return {
+    icon: getPokemonTypeIcon(type.url),
+    name: type.name,
+  }
+}
+
 function getFlavorText(species) {
   const spanishEntry = species.flavor_text_entries.find(
     (entry) => entry.language.name === 'es',
@@ -133,7 +148,7 @@ async function mapPokemonToProduct(pokemon, { includeSpecies = false } = {}) {
     weight: pokemon.weight,
     baseExperience: pokemon.base_experience,
     order: pokemon.order,
-    types: pokemon.types.map(({ type }) => type.name),
+    types: pokemon.types.map(mapPokemonType),
     abilities: pokemon.abilities.map(({ ability }) => ability.name),
     moves: pokemon.moves.slice(0, 12).map(({ move }) => formatApiName(move.name)),
     stats: pokemon.stats.map(({ base_stat, stat }) => ({

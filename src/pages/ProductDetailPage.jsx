@@ -22,8 +22,33 @@ function formatWeight(weight) {
   return `${(weight / 10).toFixed(1)} kg`
 }
 
+function getPokemonTypeName(type) {
+  return typeof type === 'string' ? type : type.name
+}
+
+function getPokemonTypeIcon(type) {
+  return typeof type === 'string' ? null : type.icon
+}
+
 function getPokemonTypeClassName(type) {
-  return `pokemon-type pokemon-type--${type.toLowerCase()}`
+  return `pokemon-type pokemon-type--${getPokemonTypeName(type).toLowerCase()}`
+}
+
+function getPokemonGeneration(id) {
+  const generations = [
+    [151, 1],
+    [251, 2],
+    [386, 3],
+    [493, 4],
+    [649, 5],
+    [721, 6],
+    [809, 7],
+    [905, 8],
+    [1025, 9],
+  ]
+  const generation = generations.find(([maxId]) => id <= maxId)?.[1]
+
+  return generation ? `Generación ${generation}` : 'Generación especial'
 }
 
 function ProductDetailPage() {
@@ -74,7 +99,7 @@ function ProductDetailPage() {
 
       {isLoading ? (
         <>
-          <Loader label="Preparando informacion del Pokemon" />
+          <Loader label="Preparando información del Pokemon" />
           <article className="detail-card detail-card--skeleton" aria-hidden="true">
             <div className="skeleton skeleton--detail-image" />
             <div className="detail-card__content">
@@ -162,7 +187,6 @@ function ProductDetailPage() {
 
           <div className="detail-card__content">
             <div className="pokemon-detail__header">
-              <p className="eyebrow">Liverpool Collection</p>
               <div className="pokemon-title-row">
                 <h1 id="detail-title">{product.title}</h1>
                 <p className="detail-price">{product.formattedPrice}</p>
@@ -170,20 +194,28 @@ function ProductDetailPage() {
 
               <div className="tag-list pokemon-types" aria-label="Tipos del Pokemon">
                 {product.types.map((type) => (
-                  <span className={getPokemonTypeClassName(type)} key={type}>
-                    {type}
+                  <span className={getPokemonTypeClassName(type)} key={getPokemonTypeName(type)}>
+                    {getPokemonTypeIcon(type) ? (
+                      <img src={getPokemonTypeIcon(type)} alt="" aria-hidden="true" />
+                    ) : null}
+                    {getPokemonTypeName(type)}
                   </span>
                 ))}
               </div>
 
-              {product.species?.genus ? (
-                <span className="pokemon-genus">{product.species.genus}</span>
-              ) : null}
+              <div className="pokemon-meta">
+                <span className="pokemon-generation">
+                  {getPokemonGeneration(product.id)}
+                </span>
+                {product.species?.genus ? (
+                  <span className="pokemon-genus">{product.species.genus}</span>
+                ) : null}
+              </div>
             </div>
 
             <p className="pokemon-description">
               {product.species?.description ||
-                `${product.title} es un Pokemon de tipo ${product.types.join(', ')} con experiencia base de ${product.baseExperience}.`}
+                `${product.title} es un Pokemon de tipo ${product.types.map(getPokemonTypeName).join(', ')} con experiencia base de ${product.baseExperience}.`}
             </p>
 
             <div className="detail-tabs" role="tablist" aria-label="Detalle Pokemon">
