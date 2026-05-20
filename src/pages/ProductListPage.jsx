@@ -34,12 +34,13 @@ function ProductListPage() {
   const isLoading = status === 'loading'
   const isPagingLoading = pagingStatus === 'loading'
   const canLoadMore = !query && !isLoading && !error && hasMore
+  const availableProductsLabel = `${products.length} productos disponibles`
   const lastUpdatedLabel = lastUpdated
-    ? new Intl.DateTimeFormat('es-MX', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(lastUpdated)
-    : 'sin sincronizar'
+    ? `Actualizado hace ${Math.max(
+        1,
+        Math.round((Date.now() - lastUpdated) / 60000),
+      )} min`
+    : 'Sin sincronizar'
 
   useEffect(() => {
     if (status === 'idle') {
@@ -88,26 +89,33 @@ function ProductListPage() {
 
   return (
     <section className="catalog-page" aria-labelledby="products-title">
-      <div className="catalog-heading">
-        <p className="eyebrow">Pokedex</p>
-        <h1 id="products-title">Catálogo Pokémon</h1>
-        <p>
-          Explora productos inspirados en PokeAPI. Busca por nombre o navega el
-          catalogo inicial.
-        </p>
-        <div className="state-panel" aria-label="Estado del catalogo">
-          <span>{cachedProductsCount} productos en cache</span>
-          <span>Actualizado: {lastUpdatedLabel}</span>
+      <div className="catalog-dashboard">
+        <div className="catalog-heading">
+          <p className="eyebrow">Pokedex</p>
+          <div className="catalog-heading__title">
+            <h1 id="products-title">Catalogo Pokemon</h1>
+            <strong>{availableProductsLabel}</strong>
+          </div>
+          <div className="state-panel" aria-label="Estado del catalogo">
+            <span>
+              <i aria-hidden="true" className="state-dot state-dot--success" />
+              {cachedProductsCount} en cache
+            </span>
+            <span>
+              <i aria-hidden="true" className="state-dot state-dot--clock" />
+              {lastUpdatedLabel}
+            </span>
+          </div>
         </div>
-      </div>
 
-      <SearchBar
-        value={query}
-        onChange={(event) => dispatch(setQuery(event.target.value))}
-        onSubmit={handleSearchSubmit}
-        onReset={handleResetSearch}
-        isLoading={isLoading}
-      />
+        <SearchBar
+          value={query}
+          onChange={(event) => dispatch(setQuery(event.target.value))}
+          onSubmit={handleSearchSubmit}
+          onReset={handleResetSearch}
+          isLoading={isLoading}
+        />
+      </div>
 
       {isLoading ? (
         <>

@@ -17,8 +17,8 @@ function LoginPage() {
   const isAuthenticated = useSelector(selectIsAuthenticated)
   const error = useSelector(selectAuthError)
   const [formValues, setFormValues] = useState({
-    email: 'usuario@liverpool.com',
-    password: 'liverpool123',
+    email: '',
+    password: '',
   })
   const [showPassword, setShowPassword] = useState(false)
   const redirectTo = location.state?.from?.pathname || '/products'
@@ -53,12 +53,8 @@ function LoginPage() {
     <section className="login-page" aria-labelledby="login-title">
       <div className="login-card">
         <div className="login-copy">
-          <p className="eyebrow">Acceso privado</p>
-          <h1 id="login-title">Liverpool Pokemon</h1>
-          <p>
-            Inicia sesion para navegar el catalogo, buscar productos y consultar
-            el detalle protegido de cada resultado.
-          </p>
+          <p className="eyebrow">Pokedex</p>
+          <h1 id="login-title">Lista de Pokemones</h1>
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>

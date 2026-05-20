@@ -10,7 +10,7 @@ function Modal({ children, onClose, title }) {
         <header className="modal-header">
           <h2 id="modal-title">{title}</h2>
           <button type="button" onClick={onClose} aria-label="Cerrar modal">
-            ×
+            x
           </button>
         </header>
         {children}

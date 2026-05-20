@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { renderWithJest } from '../test/renderWithJest.jsx'
-import LoginPage from './LoginPage.jsx'
+import { renderWithJest } from '../renderWithJest.jsx'
+import LoginPage from '../../pages/LoginPage.jsx'
 
 describe('LoginPage password visibility', () => {
   test('toggles password field visibility', async () => {

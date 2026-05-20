@@ -40,19 +40,47 @@ function App() {
       <header className="app-header">
         <NavLink className="brand" to="/products" aria-label="Ir al catalogo">
           <span className="brand-mark">L</span>
-          <span>Liverpool Pokemon</span>
+          <span>Lista de Pokemones</span>
         </NavLink>
 
         {isAuthenticated ? (
-          <div className="session-actions">
-            <span>{user?.email}</span>
-            <button type="button" onClick={() => setIsFormModalOpen(true)}>
-              Formulario
-            </button>
-            <button type="button" onClick={handleLogout}>
-              Salir
-            </button>
-          </div>
+          <>
+            <nav className="session-actions" aria-label="Navegacion de usuario">
+              <span className="session-email">{user?.email}</span>
+              <NavLink className="session-link" to="/products">
+                Catalogo
+              </NavLink>
+              <button
+                type="button"
+                className="session-button"
+                onClick={() => setIsFormModalOpen(true)}
+              >
+                Formulario
+              </button>
+              <button
+                type="button"
+                className="session-button session-button--primary"
+                onClick={handleLogout}
+              >
+                Salir
+              </button>
+            </nav>
+
+            <details className="session-menu">
+              <summary>
+                <span>{user?.email}</span>
+              </summary>
+              <div className="session-menu__panel">
+                <NavLink to="/products">Catalogo</NavLink>
+                <button type="button" onClick={() => setIsFormModalOpen(true)}>
+                  Formulario
+                </button>
+                <button type="button" onClick={handleLogout}>
+                  Salir
+                </button>
+              </div>
+            </details>
+          </>
         ) : null}
       </header>
 
@@ -90,10 +118,10 @@ function App() {
 
       {isFormModalOpen ? (
         <Modal
-          title="Formulario dinamico"
+          title="Configuracion perfil"
           onClose={() => setIsFormModalOpen(false)}
         >
-          <DynamicForm />
+          <DynamicForm onCancel={() => setIsFormModalOpen(false)} />
         </Modal>
       ) : null}
     </div>

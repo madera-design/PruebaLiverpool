@@ -1,35 +1,32 @@
-import authReducer, { login, logout } from './authSlice.js'
+import authReducer, { login, logout } from '../../../features/auth/authSlice.js'
 
-describe('authSlice with Jest', () => {
+describe('authSlice', () => {
   beforeEach(() => {
     localStorage.clear()
   })
 
-  test('creates an authenticated session', () => {
+  it('authenticates a user with email and password', () => {
     const state = authReducer(
       undefined,
       login({ email: 'usuario@liverpool.com', password: 'liverpool123' }),
     )
 
     expect(state.isAuthenticated).toBe(true)
-    expect(state.user).toEqual({
-      email: 'usuario@liverpool.com',
-      name: 'Usuario Liverpool',
-      role: 'viewer',
-    })
+    expect(state.user.email).toBe('usuario@liverpool.com')
+    expect(state.error).toBeNull()
   })
 
-  test('rejects an empty login form', () => {
+  it('stores an error when login data is incomplete', () => {
     const state = authReducer(undefined, login({ email: '', password: '' }))
 
     expect(state.isAuthenticated).toBe(false)
     expect(state.error).toBe('Ingresa correo y contrasena para continuar.')
   })
 
-  test('rejects invalid credentials', () => {
+  it('rejects invalid credentials', () => {
     const state = authReducer(
       undefined,
-      login({ email: 'usuario@liverpool.com', password: 'wrong' }),
+      login({ email: 'usuario@liverpool.com', password: 'incorrecta' }),
     )
 
     expect(state.isAuthenticated).toBe(false)
@@ -37,13 +34,12 @@ describe('authSlice with Jest', () => {
     expect(state.error).toBe('Correo o contrasena incorrectos.')
   })
 
-  test('logs out the current user', () => {
-    const authenticatedState = authReducer(
+  it('clears the current session on logout', () => {
+    const loggedState = authReducer(
       undefined,
       login({ email: 'usuario@liverpool.com', password: 'liverpool123' }),
     )
-
-    const state = authReducer(authenticatedState, logout())
+    const state = authReducer(loggedState, logout())
 
     expect(state.isAuthenticated).toBe(false)
     expect(state.user).toBeNull()

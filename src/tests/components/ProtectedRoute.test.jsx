@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { Route, Routes } from 'react-router-dom'
-import { renderWithProviders } from '../test/renderWithProviders.jsx'
-import ProtectedRoute from './ProtectedRoute.jsx'
+import { renderWithProviders } from '../renderWithProviders.jsx'
+import ProtectedRoute from '../../components/ProtectedRoute.jsx'
 
 describe('ProtectedRoute', () => {
   it('redirects unauthenticated users to login', () => {

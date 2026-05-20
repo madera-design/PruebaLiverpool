@@ -22,7 +22,7 @@ function buildInitialValues(fields) {
   }, {})
 }
 
-function DynamicForm() {
+function DynamicForm({ onCancel }) {
   const [config, setConfig] = useState(null)
   const [values, setValues] = useState({})
   const [errors, setErrors] = useState({})
@@ -166,6 +166,7 @@ function DynamicForm() {
     if (field.type === 'checkbox') {
       return (
         <label className="dynamic-checkbox" htmlFor={field.id}>
+          <span>{field.label}</span>
           <input
             id={field.id}
             name={field.id}
@@ -174,7 +175,7 @@ function DynamicForm() {
             onChange={(event) => handleChange(event, field)}
             required={isFieldRequired(field)}
           />
-          <span>{field.label}</span>
+          <span className="dynamic-switch" aria-hidden="true" />
         </label>
       )
     }
@@ -211,8 +212,7 @@ function DynamicForm() {
   return (
     <form className="dynamic-form" onSubmit={handleSubmit} noValidate>
       <div className="dynamic-form__heading">
-        <p className="eyebrow">Inputs dinamicos</p>
-        <h1>{config.formTitle}</h1>
+        <p className="eyebrow">{config.formTitle}</p>
       </div>
 
       <div className="dynamic-form__grid">
@@ -224,7 +224,9 @@ function DynamicForm() {
             {field.type !== 'checkbox' ? (
               <label htmlFor={field.id}>
                 {field.label}
-                {isFieldRequired(field) ? <span>*</span> : null}
+                {isFieldRequired(field) ? (
+                  <span className="dynamic-field__required">*</span>
+                ) : null}
               </label>
             ) : null}
             {renderField(field)}
@@ -237,16 +239,23 @@ function DynamicForm() {
         <StatusMessage title={submitMessage} />
       ) : null}
 
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? (
-          <span className="button-loader">
-            <span aria-hidden="true" />
-            Enviando
-          </span>
-        ) : (
-          'Simular envio'
-        )}
-      </button>
+      <div className="dynamic-form__actions">
+        {onCancel ? (
+          <button type="button" className="secondary-button" onClick={onCancel}>
+            Cancelar
+          </button>
+        ) : null}
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <span className="button-loader">
+              <span aria-hidden="true" />
+              Guardando
+            </span>
+          ) : (
+            'Guardar'
+          )}
+        </button>
+      </div>
     </form>
   )
 }

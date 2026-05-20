@@ -22,6 +22,10 @@ function formatWeight(weight) {
   return `${(weight / 10).toFixed(1)} kg`
 }
 
+function getPokemonTypeClassName(type) {
+  return `pokemon-type pokemon-type--${type.toLowerCase()}`
+}
+
 function ProductDetailPage() {
   const { productName } = useParams()
   const dispatch = useDispatch()
@@ -49,7 +53,23 @@ function ProductDetailPage() {
   return (
     <section className="detail-page" aria-labelledby="detail-title">
       <Link className="text-link" to="/products">
-        Volver al catalogo
+        <svg
+          aria-hidden="true"
+          className="text-link__icon"
+          fill="none"
+          height="18"
+          viewBox="0 0 24 24"
+          width="18"
+        >
+          <path
+            d="M19 12H5M11 6L5 12L11 18"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+          />
+        </svg>
+        <span>Regresar</span>
       </Link>
 
       {isLoading ? (
@@ -87,6 +107,9 @@ function ProductDetailPage() {
 
             {product.images?.length > 1 ? (
               <>
+                <span className="carousel-counter">
+                  {activeImageIndex + 1} / {product.images.length}
+                </span>
                 <button
                   type="button"
                   className="carousel-button carousel-button--previous"
@@ -138,19 +161,27 @@ function ProductDetailPage() {
           </div>
 
           <div className="detail-card__content">
-            <p className="eyebrow">Ficha Pokemon</p>
-            <div className="pokemon-title-row">
-              <h1 id="detail-title">{product.title}</h1>
-              {product.species?.genus ? <span>{product.species.genus}</span> : null}
+            <div className="pokemon-detail__header">
+              <p className="eyebrow">Liverpool Collection</p>
+              <div className="pokemon-title-row">
+                <h1 id="detail-title">{product.title}</h1>
+                <p className="detail-price">{product.formattedPrice}</p>
+              </div>
+
+              <div className="tag-list pokemon-types" aria-label="Tipos del Pokemon">
+                {product.types.map((type) => (
+                  <span className={getPokemonTypeClassName(type)} key={type}>
+                    {type}
+                  </span>
+                ))}
+              </div>
+
+              {product.species?.genus ? (
+                <span className="pokemon-genus">{product.species.genus}</span>
+              ) : null}
             </div>
 
-            <div className="tag-list pokemon-types" aria-label="Tipos del Pokemon">
-              {product.types.map((type) => (
-                <span key={type}>{type}</span>
-              ))}
-            </div>
-
-            <p>
+            <p className="pokemon-description">
               {product.species?.description ||
                 `${product.title} es un Pokemon de tipo ${product.types.join(', ')} con experiencia base de ${product.baseExperience}.`}
             </p>

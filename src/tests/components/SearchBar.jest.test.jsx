@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { jest } from '@jest/globals'
-import SearchBar from './SearchBar.jsx'
+import SearchBar from '../../components/SearchBar.jsx'
 
 describe('SearchBar with Jest', () => {
   test('fires submit and reset actions', async () => {

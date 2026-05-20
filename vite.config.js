@@ -8,6 +8,6 @@ export default defineConfig({
     environment: 'jsdom',
     exclude: ['**/node_modules/**', '**/dist/**', '**/*.jest.test.{js,jsx}'],
     globals: true,
-    setupFiles: './src/test/setup.js',
+    setupFiles: './src/tests/setup.js',
   },
 })

@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { render } from '@testing-library/react'
-import SearchBar from './SearchBar.jsx'
+import SearchBar from '../../components/SearchBar.jsx'
 
 describe('SearchBar', () => {
   it('calls change and submit handlers', async () => {

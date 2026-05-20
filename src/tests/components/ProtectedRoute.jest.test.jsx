@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { Route, Routes } from 'react-router-dom'
-import { renderWithJest } from '../test/renderWithJest.jsx'
-import ProtectedRoute from './ProtectedRoute.jsx'
+import { renderWithJest } from '../renderWithJest.jsx'
+import ProtectedRoute from '../../components/ProtectedRoute.jsx'
 
 describe('ProtectedRoute with Jest', () => {
   test('redirects guests to login', () => {

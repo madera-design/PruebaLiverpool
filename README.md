@@ -48,6 +48,8 @@ http://localhost:3001/productExtras
 
 ## Credenciales
 
+Usar estas credenciales para iniciar sesion en `/login`:
+
 ```bash
 Correo: usuario@liverpool.com
 Contrasena: liverpool123

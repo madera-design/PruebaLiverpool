@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
-import { renderWithProviders } from '../test/renderWithProviders.jsx'
-import ProductCard from './ProductCard.jsx'
+import { renderWithProviders } from '../renderWithProviders.jsx'
+import ProductCard from '../../components/ProductCard.jsx'
 
 const product = {
   id: 25,
@@ -8,6 +8,7 @@ const product = {
   title: 'Pikachu',
   image: 'https://example.com/pikachu.png',
   formattedPrice: '$1,234',
+  types: ['electric'],
 }
 
 describe('ProductCard', () => {
@@ -16,7 +17,10 @@ describe('ProductCard', () => {
 
     expect(screen.getByRole('heading', { name: 'Pikachu' })).toBeInTheDocument()
     expect(screen.getByText('#025')).toBeInTheDocument()
+    expect(screen.getByText('Liverpool Collection')).toBeInTheDocument()
+    expect(screen.getByText('electric')).toBeInTheDocument()
     expect(screen.getByText('$1,234')).toBeInTheDocument()
+    expect(screen.getByText('Ver detalle')).toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Pikachu' })).toHaveAttribute(
       'src',
       product.image,
